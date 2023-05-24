@@ -52,7 +52,7 @@ try:
                     break
 
             # Check if reading is a positive value and if so write to the excel file
-            if int(loadCellValue) > 0:
+            if int(loadCellValue) < 0:
                 worksheet.write(row, col, int(appliedLoad))
                 worksheet.write(row, col+1, int(loadCellValue))
                 row += 1
@@ -63,7 +63,7 @@ try:
         # Write the average of the data to an excel cell with a function 'AVERAGE'
         worksheet.write(all_row, 1, "=AVERAGE(" + xlsxwriter.utility.xl_col_to_name(
             col+1) + "1:"+xlsxwriter.utility.xl_col_to_name(col+1)+str(row)+")")
-        worksheet.write(all_row, 0, int(loadCellValue))
+        worksheet.write(all_row, 0, int(appliedLoad))
 
         # Update the starting rows and columns for the next calibrating load
         col = col+3

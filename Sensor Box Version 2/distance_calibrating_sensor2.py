@@ -64,7 +64,7 @@ try:
         # Write the average of the data to an excel cell with a function 'AVERAGE'
         worksheet.write(all_row, 1, "=AVERAGE(" + xlsxwriter.utility.xl_col_to_name(
             col+1) + "1:"+xlsxwriter.utility.xl_col_to_name(col+1)+str(row)+")")
-        worksheet.write(all_row, 0, int(tofValue))
+        worksheet.write(all_row, 0, int(distance))
 
         # Update the starting rows and columns for the next calibrating distance
         col = col+3

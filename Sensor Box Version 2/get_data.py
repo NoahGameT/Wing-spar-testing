@@ -29,12 +29,12 @@ os.environ["BLINKA_MCP2221_RESET_DELAY"] = "-1"
 g = 9.81
 
 # Calibration coeffiecients for distance
-a_dist = 0  # (test values)
-b_dist = 0
+a_dist = 1.0382  # (test values)
+b_dist = -5.429
 
 # Calibration coefficients for load
-a_load = 0
-b_load = 0
+a_load = -8.7802
+b_load = -959.55
 
 # Load cell
 loadCelSensor = NAU7802(board.I2C(), address=0x2a, active_channels=1)
@@ -105,8 +105,8 @@ try:
                     break
 
             # Calculate calibrated load and distance
-            load = (int(loadCellValue)-b) / (a*1000) * g # In newton
-            distance = (int(tofValue)-b) / a # in milimeters
+            load = (int(loadCellValue)-b_load) / (a_load*1000) * g # In newton
+            distance = (int(tofValue)-b_dist) / a_dist # in milimeters
 
             # Output program data
             print(f"{bcolors().OKGREEN}Program =>{bcolors().ENDC} Load cell (N): {load}, Distance (mm): {distance}")
@@ -117,9 +117,9 @@ try:
             x.append(currentTime-beginTime)
 
             # Add data to plots
-            ax1.plot(x, y1)
-            ax2.plot(x, y2)
-            ax3.plot(y2, y1)
+            ax1.plot(x, distance_data)
+            ax2.plot(x, load_data)
+            ax3.plot(distance_data, load_data)
 
             # Labels for the graph
             plt.ylabel('y')
